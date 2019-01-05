@@ -14,6 +14,7 @@
 //Classic rock radio - United States
 
 @interface ViewController ()
+
 // instantiating player and player item
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
@@ -26,7 +27,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [self setUp];
+    //Once the view has loaded then we can register to begin recieving controls and we can become the first responder
+   
+   // [[AVAudioSession sharedInstance] setDelegate: self];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    
+    if (@available(iOS 10.0, *)) {
+        //[[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryPlayback withOptions: AVAudioSessionCategoryOptionAllowAirPlay error:nil];
+        [[AVAudioSession sharedInstance]setCategory:AVAudioSessionCategoryPlayback withOptions: AVAudioSessionCategoryOptionAllowAirPlay error:nil];
+         //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+         [[AVAudioSession sharedInstance] setActive: YES error: nil];
+        [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+        [self becomeFirstResponder];
+    } else {
+        // Fallback on earlier versions
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+         [[AVAudioSession sharedInstance] setActive: YES error: nil];
+    }
+   
+   [self setUp];
 }
 
 -(void)setUp{
@@ -100,9 +119,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    //Once the view has loaded then we can register to begin recieving controls and we can become the first responder
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [self becomeFirstResponder];
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
