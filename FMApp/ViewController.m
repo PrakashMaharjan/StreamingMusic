@@ -10,8 +10,10 @@
 #import <AVFoundation/AVFoundation.h> // importing AVFoundation and AVKit
 #import <AVKit/AVKit.h>
 
-#define STREAMING_URL  @"http://rfcmedia.streamguys1.com/classicrock.mp3"
+//#define STREAMING_URL  @"http://rfcmedia.streamguys1.com/classicrock.mp3"
 //Classic rock radio - United States
+
+#define STREAMING_URL @"http://streaming.radionomy.com/JamendoLounge"
 
 @interface ViewController ()
 
